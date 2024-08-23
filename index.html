@@ -164,10 +164,10 @@
     <button id="botonIniciar" onclick="iniciarJuego()">¡Jugar Ahora!</button>
 
     <div id="marcador">0</div>
-    <button id="botonClick" style="display: none;">¡Haz clic aquí!</button>
-    <div id="mensajePerdiste" style="display: none;">¡Perdiste!</div>
-    <div id="mensajeGanaste" style="display: none;">¡Ganaste!</div>
-    <button id="botonReset" style="display: none;" onclick="resetGame()">Reiniciar</button>
+    <button id="botonClick">¡Haz clic aquí!</button>
+    <div id="mensajePerdiste">¡Perdiste!</div>
+    <div id="mensajeGanaste">¡Ganaste!</div>
+    <button id="botonReset" onclick="resetGame()">Reiniciar</button>
 
     <div id="contadorSegundos">0s</div> <!-- Contador de segundos -->
 
@@ -230,14 +230,16 @@
 
         function ganar() {
             clearInterval(tiempoIntervalo);
-            botonClick.style.display = "none";
+            marcador.style.display = "none"; // Ocultar el marcador al ganar
+            botonClick.style.display = "none"; // Ocultar el botón de clic al ganar
             mensajeGanaste.style.display = "block";
             botonReset.style.display = "block";
         }
 
         function perder() {
             clearInterval(tiempoIntervalo);
-            botonClick.style.display = "none";
+            marcador.style.display = "none"; // Ocultar el marcador al perder
+            botonClick.style.display = "none"; // Ocultar el botón de clic al perder
             mensajePerdiste.style.display = "block";
             botonReset.style.display = "block";
         }
@@ -248,13 +250,12 @@
             marcador.textContent = "0";
             contadorSegundos.textContent = "0s";
             contadorSegundos.style.color = '#00BFFF'; // Restaurar color original
-            botonClick.style.display = "none";
+            marcador.style.display = "block"; // Mostrar el marcador al reiniciar
             mensajePerdiste.style.display = "none";
             mensajeGanaste.style.display = "none";
             botonReset.style.display = "none";
-            botonIniciar.style.display = "block";
-            titulo.style.display = "block";
-            introduccion.style.display = "block";
+            botonClick.style.display = "block"; // Mostrar el botón de clic al reiniciar
+            iniciarJuego(); // Volver a la pantalla de juego sin la introducción
         }
     </script>
 </body>
