@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Clicker: Desafío Cósmico</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: url('https://www.solarsystemscope.com/textures/download/8k_stars_milky_way.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            position: relative;
+        }
+
+        #titulo {
+            font-size: 48px; /* Tamaño de fuente ajustado para dispositivos móviles */
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 255, 255, 0.5);
+            background: linear-gradient(45deg, #ff0099, #66ff66);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            animation: glow 1.5s infinite alternate;
+            z-index: 2;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 255, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.3);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(0, 255, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3);
+            }
+        }
+
+        #introduccion {
+            font-size: 16px; /* Tamaño de fuente ajustado para dispositivos móviles */
+            text-align: center;
+            margin: 20px;
+            max-width: 80%; /* Ajuste del ancho máximo para dispositivos móviles */
+            line-height: 1.5;
+            z-index: 2;
+        }
+
+        #botonIniciar {
+            padding: 15px 30px; /* Tamaño del botón ajustado para dispositivos móviles */
+            font-size: 18px; /* Tamaño de fuente ajustado para dispositivos móviles */
+            border: none;
+            border-radius: 15px;
+            background: radial-gradient(circle at 50% 50%, #00aaff, #005577);
+            color: white;
+            cursor: pointer;
+            margin-top: 20px; /* Espacio ajustado para dispositivos móviles */
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        #marcador, #botonClick, #mensajePerdiste, #mensajeGanaste, #botonReset, #contadorSegundos {
+            display: none; /* Ocultar inicialmente */
+        }
+
+        #marcador {
+            font-size: 24px; /* Tamaño de fuente ajustado para dispositivos móviles */
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #botonClick {
+            padding: 15px 30px; /* Tamaño del botón ajustado para dispositivos móviles */
+            font-size: 18px; /* Tamaño de fuente ajustado para dispositivos móviles */
+            border: none;
+            border-radius: 10px;
+            background-color: #00aaff;
+            color: white;
+            cursor: pointer;
+        }
+
+        #mensajePerdiste, #mensajeGanaste {
+            font-size: 24px; /* Tamaño de fuente ajustado para dispositivos móviles */
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #mensajePerdiste {
+            color: red;
+        }
+
+        #mensajeGanaste {
+            color: green;
+        }
+
+        #botonReset {
+            padding: 10px 20px; /* Tamaño del botón ajustado para dispositivos móviles */
+            font-size: 18px; /* Tamaño de fuente ajustado para dispositivos móviles */
+            border: none;
+            border-radius: 10px;
+            background-color: #ff5555;
+            color: white;
+            cursor: pointer;
+        }
+
+        #contadorSegundos {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 18px; /* Tamaño de fuente ajustado para dispositivos móviles */
+            font-weight: bold;
+            color: #00BFFF; /* Color celeste */
+            z-index: 10;
+        }
+
+        @media (min-width: 600px) {
+            #titulo {
+                font-size: 64px;
+            }
+            #introduccion {
+                font-size: 24px;
+            }
+            #botonIniciar {
+                padding: 20px 40px;
+                font-size: 24px;
+            }
+            #marcador {
+                font-size: 48px;
+            }
+            #botonClick {
+                padding: 20px 40px;
+                font-size: 24px;
+            }
+            #mensajePerdiste, #mensajeGanaste {
+                font-size: 48px;
+            }
+            #botonReset {
+                padding: 10px 20px;
+                font-size: 24px;
+            }
+            #contadorSegundos {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="titulo">Star Clicker: Desafío Cósmico</div>
+    <div id="introduccion">
+        Bienvenido al desafío más emocionante de la galaxia. Tu misión, si decides aceptarla, es simple pero intensa: 
+        debes demostrar tu velocidad y reflejos al hacer clic en el botón de energía estelar 100 veces en menos de 17 segundos.
+        ¿Tienes lo que se necesita para alcanzar la velocidad de la luz? Prepárate para un viaje a través del espacio 
+        donde solo los más rápidos podrán alcanzar la gloria cósmica. ¡Que comiencen los clics estelares!
+    </div>
+    <button id="botonIniciar" onclick="iniciarJuego()">¡Jugar Ahora!</button>
+
+    <div id="marcador">0</div>
+    <button id="botonClick" style="display: none;">¡Haz clic aquí!</button>
+    <div id="mensajePerdiste" style="display: none;">¡Perdiste!</div>
+    <div id="mensajeGanaste" style="display: none;">¡Ganaste!</div>
+    <button id="botonReset" style="display: none;" onclick="resetGame()">Reiniciar</button>
+
+    <div id="contadorSegundos">0s</div> <!-- Contador de segundos -->
+
+    <script>
+        let contadorClics = 0;
+        let tiempoInicio;
+        let tiempoIntervalo;
+        let segundos = 0;
+        const botonIniciar = document.getElementById("botonIniciar");
+        const titulo = document.getElementById("titulo");
+        const introduccion = document.getElementById("introduccion");
+        const botonClick = document.getElementById("botonClick");
+        const marcador = document.getElementById("marcador");
+        const mensajePerdiste = document.getElementById("mensajePerdiste");
+        const mensajeGanaste = document.getElementById("mensajeGanaste");
+        const botonReset = document.getElementById("botonReset");
+        const contadorSegundos = document.getElementById("contadorSegundos");
+
+        botonClick.addEventListener("click", () => {
+            if (contadorClics === 0) {
+                tiempoInicio = new Date().getTime();
+                iniciarContador();
+            }
+
+            contadorClics++;
+            marcador.textContent = contadorClics;
+
+            const tiempoActual = new Date().getTime();
+            const tiempoTranscurrido = (tiempoActual - tiempoInicio) / 1000;
+
+            if (contadorClics >= 100 && tiempoTranscurrido <= 17) {
+                ganar();
+            }
+        });
+
+        function iniciarJuego() {
+            titulo.style.display = "none";
+            introduccion.style.display = "none";
+            botonIniciar.style.display = "none";
+            marcador.style.display = "block";
+            botonClick.style.display = "block"; // Mostrar el botón de clic al iniciar el juego
+            marcador.textContent = "0"; // Reiniciar el marcador al iniciar el juego
+            contadorSegundos.style.display = "block"; // Mostrar el contador de segundos al iniciar el juego
+            contadorSegundos.textContent = "0s"; // Reiniciar el contador de segundos
+        }
+
+        function iniciarContador() {
+            tiempoIntervalo = setInterval(() => {
+                segundos++;
+                contadorSegundos.textContent = `${segundos}s`;
+                if (segundos >= 17) {
+                    perder();
+                } else if (segundos >= 15) {
+                    contadorSegundos.style.color = 'red'; // Cambiar a rojo
+                } else if (segundos >= 10) {
+                    contadorSegundos.style.color = 'yellow'; // Cambiar a amarillo
+                }
+            }, 1000);
+        }
+
+        function ganar() {
+            clearInterval(tiempoIntervalo);
+            botonClick.style.display = "none";
+            mensajeGanaste.style.display = "block";
+            botonReset.style.display = "block";
+        }
+
+        function perder() {
+            clearInterval(tiempoIntervalo);
+            botonClick.style.display = "none";
+            mensajePerdiste.style.display = "block";
+            botonReset.style.display = "block";
+        }
+
+        function resetGame() {
+            contadorClics = 0;
+            segundos = 0;
+            marcador.textContent = "0";
+            contadorSegundos.textContent = "0s";
+            contadorSegundos.style.color = '#00BFFF'; // Restaurar color original
+            botonClick.style.display = "none";
+            mensajePerdiste.style.display = "none";
+            mensajeGanaste.style.display = "none";
+            botonReset.style.display = "none";
+            botonIniciar.style.display = "block";
+            titulo.style.display = "block";
+            introduccion.style.display = "block";
+        }
+    </script>
+</body>
+</html>
